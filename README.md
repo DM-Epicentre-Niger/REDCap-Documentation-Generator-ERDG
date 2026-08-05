@@ -58,6 +58,7 @@ et un modèle de configuration dans
 
 ## 📚 Documentation
 
+- 👉 **[Guide d'exécution pas à pas](docs/GUIDE_EXECUTION.md)** — commencez ici
 - [Guide utilisateur](docs/GUIDE_UTILISATEUR.md)
 - [Installation Windows](docs/INSTALLATION_WINDOWS.md)
 - [Guide développeur](docs/GUIDE_DEVELOPPEUR.md)
