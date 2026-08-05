@@ -1,0 +1,54 @@
+# Exemple de configuration ERDG (a adapter a votre projet).
+# Copiez ce fichier en config.yml dans le dossier de votre projet.
+
+project:
+  organization: "Votre organisation"
+  study_name: "Nom de l'etude"
+  short_name: ""
+  language: "fr"
+  version: "1.0"
+  date: "JJ/MM/AAAA"
+  confidentiality: "Confidentiel"
+
+branding:
+  font: "Calibri"
+  title_size: 14
+  body_size: 9
+  grayscale: true
+  logo_path: ""
+
+terrain:
+  question_width_percent: 45
+  answer_width_percent: 55
+  show_response_codes: false
+  show_field_notes: true
+  show_calculated_fields: true
+  move_long_choices_to_appendix: true
+  long_choice_threshold: 15
+
+monitoring:
+  source_document: ""
+  sdv_required: ""
+  critical_variable: ""
+  custom_check: ""
+
+output:
+  create_subfolders: true
+  sanitize_filenames: true
+  pdf: false
+
+build:
+  documents:
+    - terrain
+    - monitoring
+    - dictionary
+    - specification
+    - interviewer-manual
+    - monitoring-manual
+    - branching
+    - calculations
+
+# Correspondance nom de formulaire REDCap (slug) -> libelle lisible accente.
+# REDCap retire les accents des noms de formulaires : renseignez-les ici.
+instruments:
+  # exemple_slug_formulaire: "Libelle lisible de l'instrument"

@@ -1,0 +1,44 @@
+Package: redcapdocgen
+Type: Package
+Title: REDCap Documentation Generator (ERDG)
+Version: 1.0.0
+Authors@R:
+    person(given = "Souna Garba", family = "Soumana",
+           email = "soumana78@gmail.com", role = c("aut", "cre"))
+Description: Genere de la documentation (Word, Excel, PDF) a partir d'un Data
+    Dictionary REDCap. Le Data Dictionary CSV est la source unique de verite.
+    Le squelette actuel fournit la ligne de commande et le diagnostic; les
+    parseurs, generateurs et exporteurs sont ajoutes progressivement.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends:
+    R (>= 4.3.0)
+Imports:
+    readr,
+    dplyr,
+    stringi,
+    yaml,
+    officer,
+    flextable,
+    openxlsx,
+    docopt,
+    cli,
+    R6,
+    checkmate,
+    digest,
+    glue,
+    jsonlite
+Suggests:
+    testthat (>= 3.0.0),
+    covr,
+    lintr,
+    styler,
+    shiny,
+    bslib,
+    doconv,
+    pkgload,
+    devtools,
+    renv
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Config/testthat/edition: 3

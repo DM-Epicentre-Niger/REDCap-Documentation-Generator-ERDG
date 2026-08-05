@@ -1,0 +1,21 @@
+# Hooks pre-commit pour le package R (paquet 'precommit').
+# Installation : Rscript -e "precommit::install_precommit(); precommit::use_precommit()"
+repos:
+  - repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.4.3
+    hooks:
+      - id: style-files
+        args: [--style_pkg=styler, --style_fun=tidyverse_style]
+      - id: lintr
+      - id: roxygenize
+      - id: use-tidy-description
+      - id: no-browser-statement
+      - id: parsable-R
+      - id: deps-in-desc
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+        exclude: '\.Rd$'
+      - id: trailing-whitespace
+        exclude: '\.Rd$'
