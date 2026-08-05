@@ -1,90 +1,87 @@
 # REDCap Documentation Generator (ERDG)
 
-Package **R** qui transforme un *Data Dictionary* REDCap (`.csv`) en un ensemble
-de documents Word, Excel et PDF. Le Data Dictionary est la **source unique de
-vérité**.
+[![R-CMD-check](https://github.com/SOGA-AFRICA/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SOGA-AFRICA/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
+[![R](https://img.shields.io/badge/R-%E2%89%A5%204.3-1f65cc.svg)](https://cran.r-project.org/)
+[![Tests](https://img.shields.io/badge/tests-64%20passing-brightgreen.svg)](tests/testthat)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Version 1.0.0** — fonctionnelle. Voir [CHANGELOG.md](CHANGELOG.md), le
-> [guide utilisateur](docs/GUIDE_UTILISATEUR.md) et les
-> [limites connues](docs/LIMITES_CONNUES.md).
+> Package **R** qui transforme un *Data Dictionary* REDCap (`.csv`) en un ensemble
+> de documents **Word, Excel et PDF**. Le Data Dictionary est la **source unique
+> de vérité** ; aucune règle clinique n'est inventée.
 
-## Documents produits
+---
 
-CRF Terrain · CRF Monitoring · Data Dictionary lisible (Word/Excel) · Data
-Collection Specification · Manuel enquêteur · Manuel de monitoring · Branching
-Logic Guide · Calculations Guide · Rapport de comparaison entre deux versions ·
-Export PDF.
+## ✨ Documents produits
 
-## Commandes
+| Document | Public | Format |
+|---|---|---|
+| **CRF Terrain** | Enquêteurs / terrain (sans nom de variable ni syntaxe REDCap) | Word / PDF |
+| **CRF Monitoring** | Data managers / moniteurs (tableau technique) | Word / PDF |
+| **Data Dictionary lisible** | Tous | Word + Excel |
+| **Data Collection Specification** | Audit (empreinte SHA-256) | Word / PDF |
+| **Manuel enquêteur** · **Manuel de monitoring** | Terrain / monitoring | Word / PDF |
+| **Guide Branching Logic** · **Guide des calculs** | Programmeurs REDCap | Word / PDF |
+| **Rapport de comparaison** de deux versions | Data management | Word + Excel + JSON |
 
-```text
-redcap-doc doctor
-redcap-doc validate <csv>
-redcap-doc build <document> <csv> [--output=<dir>] [--config=<yml>] [--pdf]
-redcap-doc compare <old.csv> <new.csv> [--output=<dir>]
-redcap-doc build-project <dossier_projet> [--pdf]
-redcap-doc pdf <docx_ou_dossier> [--output=<dir>]
-redcap-doc gui
-```
-
-## Prérequis
-
-- **R 4.4+** (recommandé ; fonctionne aussi sous R 4.3.x).
-- Windows. Pour l'export PDF (V5) : **LibreOffice** (recommandé) ou MS Word.
-
-## Installation (Windows)
+## 🚀 Démarrage rapide
 
 ```powershell
+# Installation (Windows)
 .\scripts\install_windows.ps1
-```
 
-Le script localise `Rscript`, restaure les dépendances (renv si présent) et
-installe le package en local.
-
-## Utilisation
-
-```powershell
-# Diagnostic de l'environnement
+# Diagnostic
 .\scripts\redcap-doc.ps1 doctor
 
-# Aide
-.\scripts\redcap-doc.ps1 --help
+# Générer un document
+.\scripts\redcap-doc.ps1 build terrain input\DataDictionary.csv --output output --pdf
+
+# Tout un projet en une commande
+.\scripts\redcap-doc.ps1 build-project mon_projet --pdf
+
+# Comparer deux versions
+.\scripts\redcap-doc.ps1 compare ancien.csv nouveau.csv --output comparison
+
+# Interface graphique
+.\scripts\redcap-doc.ps1 gui
 ```
 
-Sans PowerShell, en appelant directement Rscript :
+Un exemple de Data Dictionary est fourni dans
+[`inst/extdata/sample_data_dictionary.csv`](inst/extdata/sample_data_dictionary.csv)
+et un modèle de configuration dans
+[`inst/extdata/config.example.yml`](inst/extdata/config.example.yml).
 
-```bash
-Rscript inst/scripts/redcap-doc.R doctor
-```
+## 📦 Prérequis
 
-Commandes prévues (non encore actives dans le squelette) :
+- **R 4.4+** (fonctionne aussi sous R 4.3.x).
+- Pour l'export **PDF** : **LibreOffice** (détecté automatiquement).
 
-```text
-redcap-doc validate <csv>
-redcap-doc build <document> <csv> [--output=<dir>] [--config=<yml>] [--pdf]
-redcap-doc compare <old.csv> <new.csv> [--output=<dir>]
-redcap-doc build-project <project_dir>
-redcap-doc gui
-```
+## 📚 Documentation
 
-## Tests
+- [Guide utilisateur](docs/GUIDE_UTILISATEUR.md)
+- [Installation Windows](docs/INSTALLATION_WINDOWS.md)
+- [Guide développeur](docs/GUIDE_DEVELOPPEUR.md)
+- [Limites connues](docs/LIMITES_CONNUES.md)
+- [Changelog](CHANGELOG.md)
+
+## 🧪 Développement
 
 ```powershell
-.\scripts\run_tests.ps1
+.\scripts\run_tests.ps1     # tests testthat
+.\scripts\run_checks.ps1    # tests + lintr + styler + couverture
 ```
 
-## Structure
+Architecture (package R, sources à plat dans `R/`) : `parser → services →
+generators → exporters`. Voir le [guide développeur](docs/GUIDE_DEVELOPPEUR.md).
 
-Package R standard : les sources sont à plat dans `R/`, organisées par préfixe
-(`domain-*`, `parser-*`, `service-*`, `generator-*`, `exporter-*`). Voir la
-section Architecture de [`ERDG_PROMPTS_R.md`](ERDG_PROMPTS_R.md).
+## 🔒 Principes
 
-## Confidentialité
+- Le Data Dictionary REDCap est l'**unique source de vérité**.
+- Aucune règle clinique, source ou criticité inventée : le contenu à confirmer
+  est marqué **`[À VALIDER PAR L'ÉQUIPE ÉTUDE]`**.
+- Les fichiers source ne sont **jamais modifiés** ; lors d'une comparaison, le
+  nouveau Data Dictionary n'est **jamais remplacé**.
 
-Les données réelles (ex. essai MDF) vont dans `projects/MDF/input/` et
-`projects/MDF/output/`, **exclues de git** (`.gitignore`). Elles ne doivent
-jamais figurer dans les fixtures, les tests ni l'archive de distribution.
+## 📄 Licence
 
-## Licence
-
-MIT — voir [`LICENSE`](LICENSE).
+[MIT](LICENSE) © Souna Garba Soumana
