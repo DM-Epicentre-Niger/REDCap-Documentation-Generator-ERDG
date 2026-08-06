@@ -7,8 +7,8 @@ Authors@R:
            email = "soumana78@gmail.com", role = c("aut", "cre"))
 Description: Genere de la documentation (Word, Excel, PDF) a partir d'un Data
     Dictionary REDCap. Le Data Dictionary CSV est la source unique de verite.
-    Le squelette actuel fournit la ligne de commande et le diagnostic; les
-    parseurs, generateurs et exporteurs sont ajoutes progressivement.
+    CRF terrain et monitoring, dictionnaire lisible, specification, manuels,
+    guides de logique et de calculs, comparaison de versions, CLI et interface graphique.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
