@@ -155,6 +155,12 @@ Une fenêtre s'ouvre dans votre navigateur : choisissez le fichier, cochez les
 documents, cliquez **GÉNÉRER**. Validation, journal et barre de progression
 inclus. Fermez l'onglet pour quitter.
 
+![Interface graphique ERDG](images/gui.png)
+
+*Panneau de gauche : sélection du Data Dictionary, du dossier de sortie et des
+documents à générer (case « Générer aussi le PDF », option « malgré les
+avertissements »). À droite : résultats de validation et journal.*
+
 ---
 
 ## Dépannage rapide
