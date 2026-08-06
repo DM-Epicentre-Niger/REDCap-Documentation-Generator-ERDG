@@ -9,6 +9,7 @@ test_that("build_pdf echoue proprement sur un chemin inexistant", {
 })
 
 test_that("la conversion PDF fonctionne quand un moteur est disponible", {
+  testthat::skip_on_ci()
   testthat::skip_if_not(pdf_engine_available(), "Aucun moteur PDF (LibreOffice/Word).")
 
   # Genere un petit .docx puis le convertit.

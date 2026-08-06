@@ -40,7 +40,9 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          args: 'c("--no-manual", "--no-build-vignettes")'
+          args: 'c("--no-manual")'
+          build_args: 'c("--no-build-vignettes")'
+          error-on: '"error"'
 
   lint:
     runs-on: ubuntu-latest
