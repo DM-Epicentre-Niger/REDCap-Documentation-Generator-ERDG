@@ -56,7 +56,7 @@
   pdf_default <- isTRUE(prefs$pdf)
 
   bslib::page_sidebar(
-    title = "ERDG - Epicentre REDCap Documentation Generator",
+    title = "REDCap Documentation Generator (ERDG)",
     theme = bslib::bs_theme(preset = "flatly"),
     sidebar = bslib::sidebar(
       width = 380,
