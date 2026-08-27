@@ -142,18 +142,12 @@
 )
 .MON_WIDTHS <- c(0.16, 0.30, 0.22, 0.32)
 
-# Construit le document officer d'un instrument.
-.monitoring_document <- function(project, instrument, cfg) {
+# Ajoute au document `doc` le contenu monitoring d'un instrument (tableaux par
+# section). Retourne le document et la liste d'annexes accumulee.
+.monitoring_append_instrument <- function(doc, project, instrument, cfg, appendix = list()) {
   fields <- project$fields[project$fields$form_name == instrument, , drop = FALSE]
   all_vars <- project$fields$field_name
   grp <- .section_groups(fields)
-
-  doc <- officer::read_docx()
-  doc <- .docx_add_title_block(doc, cfg, .instrument_display_label(instrument, cfg),
-    doc_kind = "CRF Monitoring")
-  doc <- .mon_add_legend(doc, cfg)
-
-  appendix <- list()
   for (g in unique(grp$group)) {
     idx <- which(grp$group == g)
     title <- .strip_html(grp$titles[[g]])
@@ -186,11 +180,52 @@
     doc <- flextable::body_add_flextable(doc, ft)
     doc <- officer::body_add_par(doc, "")
   }
+  list(doc = doc, appendix = appendix)
+}
 
+# Construit le document officer d'un instrument.
+.monitoring_document <- function(project, instrument, cfg) {
+  doc <- officer::read_docx()
+  doc <- .docx_add_title_block(doc, cfg, .instrument_display_label(instrument, cfg),
+    doc_kind = "CRF Monitoring")
+  doc <- .mon_add_legend(doc, cfg)
+  r <- .monitoring_append_instrument(doc, project, instrument, cfg)
+  doc <- r$doc
+  if (length(r$appendix) > 0L) {
+    doc <- .terrain_appendix(doc, r$appendix, cfg)
+  }
+  .docx_set_a4(doc)
+}
+
+# Construit UN document fusionnant tous les CRF Monitoring (un par instrument,
+# separes par un saut de page).
+.monitoring_merged_document <- function(project, cfg) {
+  b <- cfg$branding
+  ft_sec <- officer::fp_text(font.size = b$title_size - 1, bold = TRUE, font.family = b$font)
+
+  doc <- officer::read_docx()
+  doc <- .docx_add_title_block(doc, cfg, "Fusion de tous les CRF Monitoring",
+    doc_kind = "CRF Monitoring")
+  doc <- .mon_add_legend(doc, cfg)
+
+  appendix <- list()
+  first <- TRUE
+  for (inst in project$instruments) {
+    if (!first) {
+      doc <- officer::body_add_break(doc)
+    }
+    first <- FALSE
+    doc <- officer::body_add_fpar(doc, officer::fpar(
+      officer::ftext(.instrument_display_label(inst, cfg), ft_sec)
+    ))
+    doc <- officer::body_add_par(doc, "")
+    r <- .monitoring_append_instrument(doc, project, inst, cfg, appendix)
+    doc <- r$doc
+    appendix <- r$appendix
+  }
   if (length(appendix) > 0L) {
     doc <- .terrain_appendix(doc, appendix, cfg)
   }
-
   .docx_set_a4(doc)
 }
 
@@ -223,4 +258,32 @@ build_monitoring <- function(csv, output = "output", config = NULL) {
   }
   cli::cli_alert_success("{length(files)} document(s) genere(s) dans {normalizePath(output, winslash = '/')}")
   invisible(files)
+}
+
+#' Generer la fusion de tous les CRF Monitoring (Word)
+#'
+#' Produit UN document Word regroupant les CRF Monitoring de tous les instruments
+#' (chacun sur une nouvelle page). Meme contenu technique que les CRF Monitoring
+#' individuels, rassemble en un seul fichier.
+#'
+#' @param csv Chemin du Data Dictionary CSV.
+#' @param output Dossier de sortie (cree si besoin).
+#' @param config Chemin d'un YAML de configuration, ou `NULL`.
+#'
+#' @return De facon invisible, le chemin du fichier genere.
+#' @export
+build_monitoring_merged <- function(csv, output = "output", config = NULL) {
+  project <- parse_data_dictionary(csv)
+  cfg <- erdg_load_config(config)
+  dir.create(output, showWarnings = FALSE, recursive = TRUE)
+
+  base <- tools::file_path_sans_ext(basename(csv))
+  path <- file.path(output, paste0("Fusion_CRF_Monitoring_", base, ".docx"))
+  cli::cli_h2("Fusion CRF Monitoring")
+  cli::cli_alert_info("Instruments a fusionner : {length(project$instruments)}")
+  doc <- .monitoring_merged_document(project, cfg)
+  print(doc, target = path)
+  cli::cli_alert_success("{basename(path)}")
+  cli::cli_alert_success("Genere dans {normalizePath(output, winslash = '/')}")
+  invisible(path)
 }

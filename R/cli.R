@@ -100,6 +100,7 @@ run_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
       res <- switch(document,
         "terrain" = build_terrain(csv, output = out, config = conf),
         "monitoring" = build_monitoring(csv, output = out, config = conf),
+        "monitoring-merged" = build_monitoring_merged(csv, output = out, config = conf),
         "dictionary" = build_dictionary(csv,
           output = out, config = conf,
           format = .get_opt(rest, "--format", "all")
@@ -111,7 +112,7 @@ run_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
         "calculations" = build_calculations_guide(csv, output = out, config = conf),
         cli::cli_abort(c(
           "Document inconnu : {.val {document}}.",
-          "i" = "Documents disponibles : {.val terrain}, {.val monitoring}, {.val dictionary}, {.val specification}, {.val interviewer-manual}, {.val monitoring-manual}, {.val branching}, {.val calculations}."
+          "i" = "Documents disponibles : {.val terrain}, {.val monitoring}, {.val monitoring-merged}, {.val dictionary}, {.val specification}, {.val interviewer-manual}, {.val monitoring-manual}, {.val branching}, {.val calculations}."
         ))
       )
       if ("--pdf" %in% rest) {

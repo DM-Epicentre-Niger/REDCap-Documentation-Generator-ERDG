@@ -6,6 +6,7 @@
 .GUI_DOCUMENTS <- c(
   "CRF Terrain" = "terrain",
   "CRF Monitoring" = "monitoring",
+  "Fusion CRF Monitoring" = "monitoring-merged",
   "Data Dictionary (Word + Excel)" = "dictionary",
   "Data Collection Specification" = "specification",
   "Manuel enqu\u00eateur" = "interviewer-manual",
@@ -50,7 +51,7 @@
 .gui_ui <- function(prefs) {
   sel_docs <- prefs$documents
   if (is.null(sel_docs)) {
-    sel_docs <- setdiff(unname(.GUI_DOCUMENTS), "comparison")
+    sel_docs <- setdiff(unname(.GUI_DOCUMENTS), c("comparison", "monitoring-merged"))
   }
   out_dir <- if (!is.null(prefs$output)) prefs$output else "output"
   pdf_default <- isTRUE(prefs$pdf)

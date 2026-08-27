@@ -41,3 +41,18 @@ test_that("le CRF Monitoring inclut une legende technique", {
   expect_true(grepl("data managers", txt, fixed = TRUE))
   expect_true(grepl("Contr", txt))
 })
+
+test_that("build_monitoring_merged fusionne tous les instruments dans un fichier", {
+  out <- tempfile("monm_")
+  on.exit(unlink(out, recursive = TRUE))
+  f <- build_monitoring_merged(sample_csv(), output = out)
+  expect_length(f, 1L)
+  expect_true(file.exists(f))
+  txt <- docx_text(f)
+  # les deux instruments de l'exemple sont presents dans le meme document
+  expect_true(grepl("Demographics", txt, fixed = TRUE))
+  expect_true(grepl("Clinical", txt, fixed = TRUE))
+  # contenu technique conserve
+  expect_true(grepl("record_id", txt, fixed = TRUE))
+  expect_true(grepl("Type :", txt, fixed = TRUE))
+})

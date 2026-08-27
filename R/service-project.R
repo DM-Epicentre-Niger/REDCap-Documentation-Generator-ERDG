@@ -9,6 +9,9 @@
   "monitoring" = list(sub = "monitoring", fn = function(csv, out, cfg) {
     build_monitoring(csv, output = out, config = cfg)
   }),
+  "monitoring-merged" = list(sub = "monitoring", fn = function(csv, out, cfg) {
+    build_monitoring_merged(csv, output = out, config = cfg)
+  }),
   "dictionary" = list(sub = "dictionary", fn = function(csv, out, cfg) {
     build_dictionary(csv, output = out, config = cfg, format = "all")
   }),

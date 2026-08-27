@@ -18,6 +18,7 @@
 |---|---|---|
 | **CRF Terrain** | Enquêteurs / terrain (sans nom de variable ni syntaxe REDCap) | Word / PDF |
 | **CRF Monitoring** | Data managers / moniteurs (tableau technique) | Word / PDF |
+| **Fusion CRF Monitoring** | Tous les CRF de monitoring réunis dans un seul document | Word / PDF |
 | **Data Dictionary lisible** | Tous | Word + Excel |
 | **Data Collection Specification** | Audit (empreinte SHA-256) | Word / PDF |
 | **Manuel enquêteur** · **Manuel de monitoring** | Terrain / monitoring | Word / PDF |
