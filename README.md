@@ -1,6 +1,6 @@
 # REDCap Documentation Generator (ERDG)
 
-[![R-CMD-check](https://github.com/SOGA-AFRICA/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SOGA-AFRICA/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/DM-Epicentre-Niger/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DM-Epicentre-Niger/REDCap-Documentation-Generator-ERDG/actions/workflows/R-CMD-check.yaml)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 [![R](https://img.shields.io/badge/R-%E2%89%A5%204.3-1f65cc.svg)](https://cran.r-project.org/)
 [![Tests](https://img.shields.io/badge/tests-64%20passing-brightgreen.svg)](tests/testthat)
