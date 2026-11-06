@@ -129,8 +129,41 @@
 }
 
 # Construit le document officer d'un instrument.
+# Construit la regex des tags d'action a exclure. Pour chaque tag de base (ex.
+# @HIDDEN) on accepte les variantes -APP et -FORM, mais PAS -SURVEY (le champ
+# reste visible sur le formulaire). Correspondance via une limite negative pour
+# ne pas confondre @HIDDEN avec @HIDDEN-SURVEY.
+.action_tag_exclude_regex <- function(tags) {
+  bases <- toupper(gsub("^@", "", tags))
+  bases <- bases[nzchar(bases)]
+  if (length(bases) == 0L) {
+    return(NULL)
+  }
+  alt <- paste(paste0("@", bases, "(-APP|-FORM)?"), collapse = "|")
+  paste0("(", alt, ")(?![-A-Za-z0-9])")
+}
+
+# Retire d'un CRF de collecte les champs dont l'annotation REDCap porte un tag
+# d'exclusion (champ cache ou en lecture seule). Pilote par
+# cfg$terrain$exclude_action_tags (defaut : @HIDDEN et @READONLY, variantes
+# -APP/-FORM comprises). Une liste vide desactive l'exclusion.
+.exclude_action_tag_fields <- function(fields, cfg) {
+  tags <- cfg$terrain$exclude_action_tags
+  if (is.null(tags)) {
+    tags <- c("@HIDDEN", "@READONLY")
+  }
+  tags <- unlist(tags) # une liste YAML devient un vecteur
+  rx <- .action_tag_exclude_regex(tags)
+  if (is.null(rx) || nrow(fields) == 0L) {
+    return(fields)
+  }
+  ann <- toupper(ifelse(is.na(fields$annotation), "", fields$annotation))
+  fields[!grepl(rx, ann, perl = TRUE), , drop = FALSE]
+}
+
 .terrain_document <- function(project, instrument, cfg) {
   fields <- project$fields[project$fields$form_name == instrument, , drop = FALSE]
+  fields <- .exclude_action_tag_fields(fields, cfg)
   grp <- .section_groups(fields)
   doc <- officer::read_docx()
   doc <- .docx_add_title_block(doc, cfg, .instrument_display_label(instrument, cfg))

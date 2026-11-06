@@ -78,7 +78,9 @@ Voir [`projects/MDF/config.yml`](../projects/MDF/config.yml). Points clés :
   dans les documents ;
 - `instruments:` — libellés lisibles (accentués) des formulaires REDCap, dont le
   nom d'origine est un slug sans accents ;
-- `terrain:` — options d'affichage (codes, notes, seuil des listes longues…) ;
+- `terrain:` — options d'affichage (codes, notes, seuil des listes longues…) et
+  `exclude_action_tags` : tags REDCap retirés des CRF de collecte (défaut
+  `@HIDDEN`, `@READONLY` ; variantes `-APP`/`-FORM` incluses, pas `-SURVEY`) ;
 - `output.create_subfolders`, `output.pdf` ;
 - `build.documents` — liste des documents produits par `build-project`.
 

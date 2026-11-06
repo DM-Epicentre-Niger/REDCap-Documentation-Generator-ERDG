@@ -214,6 +214,8 @@
 
   f <- project$fields[project$fields$form_name == form_name, , drop = FALSE]
   f <- f[order(f$.order), , drop = FALSE]
+  # Exclut les champs caches / en lecture seule (@HIDDEN, @READONLY, variantes).
+  f <- .exclude_action_tag_fields(f, cfg)
 
   # Classification en une passe.
   n <- nrow(f)
