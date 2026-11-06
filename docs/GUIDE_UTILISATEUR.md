@@ -17,7 +17,7 @@ Produit un résumé console + un rapport Markdown et JSON (erreurs / avertisseme
 .\scripts\redcap-doc.ps1 build <document> input\MonDataDictionary.csv --output output [--config config.yml] [--pdf]
 ```
 
-Documents disponibles : `terrain`, `monitoring`, `monitoring-merged`, `dictionary`, `specification`,
+Documents disponibles : `terrain`, `terrain-tmf`, `monitoring`, `monitoring-merged`, `dictionary`, `specification`,
 `interviewer-manual`, `monitoring-manual`, `branching`, `calculations`.
 
 Exemple :

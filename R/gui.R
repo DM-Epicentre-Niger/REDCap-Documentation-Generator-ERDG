@@ -5,6 +5,7 @@
 # Documents proposes (libelle affiche -> identifiant interne).
 .GUI_DOCUMENTS <- c(
   "CRF Terrain" = "terrain",
+  "CRF Terrain TMF (en-t\u00eate/pied, annexes)" = "terrain-tmf",
   "CRF Monitoring" = "monitoring",
   "Fusion CRF Monitoring" = "monitoring-merged",
   "Data Dictionary (Word + Excel)" = "dictionary",
@@ -51,7 +52,7 @@
 .gui_ui <- function(prefs) {
   sel_docs <- prefs$documents
   if (is.null(sel_docs)) {
-    sel_docs <- setdiff(unname(.GUI_DOCUMENTS), c("comparison", "monitoring-merged"))
+    sel_docs <- setdiff(unname(.GUI_DOCUMENTS), c("comparison", "monitoring-merged", "terrain-tmf"))
   }
   out_dir <- if (!is.null(prefs$output)) prefs$output else "output"
   pdf_default <- isTRUE(prefs$pdf)

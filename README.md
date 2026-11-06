@@ -17,6 +17,7 @@
 | Document | Public | Format |
 |---|---|---|
 | **CRF Terrain** | Enquêteurs / terrain (sans nom de variable ni syntaxe REDCap) | Word / PDF |
+| **CRF Terrain TMF** | Trial Master File : en-tête (logo) + pied paginé, sections numérotées, annexes | Word / PDF |
 | **CRF Monitoring** | Data managers / moniteurs (tableau technique) | Word / PDF |
 | **Fusion CRF Monitoring** | Tous les CRF de monitoring réunis dans un seul document | Word / PDF |
 | **Data Dictionary lisible** | Tous | Word + Excel |

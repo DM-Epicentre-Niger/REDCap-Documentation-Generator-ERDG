@@ -21,3 +21,10 @@ projects/MDF/input/*
 projects/MDF/output/*
 !projects/MDF/input/.gitkeep
 !projects/MDF/output/.gitkeep
+
+# Assets specifiques a une etude (logos, gabarits) et config locale
+projects/MDF/assets/
+projects/MDF/config.yml
+
+# Sorties generees a la racine (hors suivi)
+/output/

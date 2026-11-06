@@ -28,8 +28,8 @@ Options :
   --pdf              Genere aussi le PDF (necessite LibreOffice ou MS Word).
 
 Documents (commande build) :
-  terrain, monitoring, dictionary, specification, interviewer-manual,
-  monitoring-manual, branching, calculations
+  terrain, terrain-tmf, monitoring, monitoring-merged, dictionary,
+  specification, interviewer-manual, monitoring-manual, branching, calculations
 "
 
 # Version du package, avec repli si le package n'est pas encore installe.
@@ -99,6 +99,7 @@ run_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
       conf <- .get_opt(rest, "--config", NULL)
       res <- switch(document,
         "terrain" = build_terrain(csv, output = out, config = conf),
+        "terrain-tmf" = build_terrain_tmf(csv, output = out, config = conf),
         "monitoring" = build_monitoring(csv, output = out, config = conf),
         "monitoring-merged" = build_monitoring_merged(csv, output = out, config = conf),
         "dictionary" = build_dictionary(csv,
@@ -112,7 +113,7 @@ run_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
         "calculations" = build_calculations_guide(csv, output = out, config = conf),
         cli::cli_abort(c(
           "Document inconnu : {.val {document}}.",
-          "i" = "Documents disponibles : {.val terrain}, {.val monitoring}, {.val monitoring-merged}, {.val dictionary}, {.val specification}, {.val interviewer-manual}, {.val monitoring-manual}, {.val branching}, {.val calculations}."
+          "i" = "Documents disponibles : {.val terrain}, {.val terrain-tmf}, {.val monitoring}, {.val monitoring-merged}, {.val dictionary}, {.val specification}, {.val interviewer-manual}, {.val monitoring-manual}, {.val branching}, {.val calculations}."
         ))
       )
       if ("--pdf" %in% rest) {

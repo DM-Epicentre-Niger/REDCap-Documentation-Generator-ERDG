@@ -6,6 +6,9 @@
   "terrain" = list(sub = "terrain", fn = function(csv, out, cfg) {
     build_terrain(csv, output = out, config = cfg)
   }),
+  "terrain-tmf" = list(sub = "TMF", fn = function(csv, out, cfg) {
+    build_terrain_tmf(csv, output = out, config = cfg)
+  }),
   "monitoring" = list(sub = "monitoring", fn = function(csv, out, cfg) {
     build_monitoring(csv, output = out, config = cfg)
   }),
